@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package user; 
+
+
+service Users {
+	rpc AddNewUser(User) returns (Message);
+	rpc GetUserById(UserId) returns (User);
+	rpc UpdateUser(User) returns (Message);
+	rpc DeleteUser(UserId) returns (Message);
+
+	rpc GetUsersFromTo(UserIds) returns (stream User);
+	rpc DeleteUsers(stream UserId) returns (stream Message);
+}
+
+message User {
+	string id = 1;
+	string name = 2;
+	string surname = 3;
+	optional string address = 4;
+
+	message PhoneNumber {
+		string number = 1;
+	}
+
+	repeated PhoneNumber phoneNumbers = 5;
+}
+
+message UserId {
+	string id = 1;
+}
+
+message UserIds {
+	string from = 1;
+	string to = 2;
+}
+
+message Message {
+	string text = 1;
+}
