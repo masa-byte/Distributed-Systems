@@ -22,17 +22,21 @@ int main(int argc, char** argv) {
 	int integersToRead = bytesToRead / sizeof(MPI_INT);
 	int* myIntegers = new int(integersToRead);
 
-	if (rank == 0) 
+	if (rank == 0)
 		printf("There is %d of us so each one will read %d bytes -> %d integers\n", size, bytesToRead, integersToRead);
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	MPI_File_open(MPI_COMM_WORLD, fileName, MPI_MODE_RDONLY, MPI_INFO_NULL, &fh);
 
-	//MPI_File_seek(fh, rank * bytesToRead, MPI_SEEK_SET);
-	//MPI_File_read(fh, myIntegers, integersToRead, MPI_INT, MPI_STATUS_IGNORE);
+	MPI_Datatype newType;
 
-	MPI_File_read_at(fh, rank * bytesToRead, myIntegers, integersToRead, MPI_INT, MPI_STATUS_IGNORE);
+	MPI_Type_vector(1, 2, 6, MPI_INT, &newType);
+	MPI_Type_commit(&newType);
+
+	MPI_File_set_view(fh, rank * integersToRead * sizeof(MPI_INT), MPI_INT, newType, "native", MPI_INFO_NULL);
+
+	MPI_File_read(fh, myIntegers, integersToRead, MPI_INT, MPI_STATUS_IGNORE);
 
 	MPI_File_close(&fh);
 

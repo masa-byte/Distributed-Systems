@@ -7,7 +7,7 @@ public class Vehicle implements Serializable {
     private boolean isFree;
     private int roundNum;
 
-    public Vehicle(int id, String address, boolean isFree, int roundNum) throws RemoteException {
+    public Vehicle(int id, String address, boolean isFree, int roundNum) {
         super();
         this.id = id;
         this.address = address;
@@ -15,27 +15,27 @@ public class Vehicle implements Serializable {
         this.roundNum = roundNum;
     }
 
-    public int getId() throws RemoteException {
+    public int getId() {
         return this.id;
     }
 
-    public String getAddress() throws RemoteException {
+    public String getAddress() {
         return this.address;
     }
 
-    public boolean getIsFree() throws RemoteException {
+    public boolean getIsFree() {
         return this.isFree;
     }
 
-    public int getRoundNum() throws RemoteException {
+    public int getRoundNum() {
         return this.roundNum;
     }
 
-    public void setAdress(String address) throws RemoteException {
+    public void setAdress(String address) {
         this.address = address;
     }
 
-    public void setRoundNum(int roundNum) throws RemoteException {
+    public void setRoundNum(int roundNum) {
         this.roundNum = roundNum;
     }
 }
