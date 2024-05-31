@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="jada.cpp" />
     <ClCompile Include="lab.cpp" />
     <ClCompile Include="task.cpp" />
   </ItemGroup>
