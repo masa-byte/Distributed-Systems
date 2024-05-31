@@ -1,0 +1,33 @@
+---Za CallBack---
+
+// u interfejs
+[ServiceContract(CallbackContract = typeof(IChatCallback), SessionMode = SessionMode.Required)]
+public interface IChat
+
+// u .svc
+users[name] = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+
+// kod klijenta
+CalculatorClient proxy = new CalculatorClient(new InstanceContext(new CallbackHandler()));
+public class CallbackHandler : ICalculatorCallback {}
+
+// u web config
+<bindings>
+  <wsDualHttpBinding>
+	<binding name="wsDualHttpBinding_IChat"/>
+  </wsDualHttpBinding>
+</bindings>
+<services>
+  <service name="Chat.Chat">
+	<endpoint binding="wsDualHttpBinding" contract="Chat.IChat"/>
+  </service>
+</services>
+
+---Za sve ostalo---
+[ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode=ConcurrencyMode.Reentrant)]
+														   PerCall
+														   Single
+
+Za sesiju - wsHttpBinding
+Za single - basicHttpBinding
+Za callback - wsDualHttpBinding
