@@ -4,16 +4,15 @@ using GrpcServer;
 using System;
 
 using var channel = GrpcChannel.ForAddress("http://localhost:5117");
-// var client = new GrpcServer.Users.UsersClient(channel);
-var client = new GrpcServer.FishPond.FishPondClient(channel);
-
+//var client = new GrpcServer.Users.UsersClient(channel);
+var client = new GrpcServer.Numbers2.Numbers2Client(channel);
 
 string input;
 
 do
 {
     Console.WriteLine("Average value for data - av");
-    Console.WriteLine("Add or multiply data - am");
+    Console.WriteLine("Substract or multiply data - am");
     Console.WriteLine("Get accumulator - g");
     Console.WriteLine("Stop exec - x");
 
@@ -25,7 +24,7 @@ do
             await AverageValueForData();
             break;
         case "am":
-            await AddOrMultiplyData();
+            await SubOrMultiplyData();
             break;
         case "g":
             await GetAccumulator();
@@ -40,71 +39,61 @@ while (input != "x");
 
 async Task AverageValueForData()
 {
-    //Console.WriteLine("Input integer numbers.\nEnter \"x\" to finish data stream");
-    //try
-    //{
-    //    var call = client.AverageValueForData();
-    //    while (true)
-    //    {
-    //        string userInput = Console.ReadLine()!;
-    //        if (userInput == "x") break;
+    Console.WriteLine("Input number");
+    try
+    {
+        string userInput = Console.ReadLine()!;
+        double number = double.Parse(userInput);
 
-    //        int number = int.Parse(userInput);
+        var call = client.AvgValueAsync(new Number() { Value = number});
 
-    //        await call.RequestStream.WriteAsync(new Data
-    //        {
-    //            Value = number
-    //        });
-    //    }
+        var res = await call;
 
-    //    await call.RequestStream.CompleteAsync();
-
-    //    var resp = await call;
-    //    Console.ForegroundColor = ConsoleColor.Green;
-    //    Console.WriteLine("Average value for data calculated");
-    //    Console.ResetColor();
-    //}
-    //catch (Exception e)
-    //{
-    //    Console.WriteLine(e);
-    //}
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Average value for number calculated");
+        Console.ResetColor();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 }
 
-async Task AddOrMultiplyData()
+async Task SubOrMultiplyData()
 {
-    //Console.WriteLine("Input integer numbers.\nEnter \"x\" to finish data stream");
-    //try
-    //{
-    //    var call = client.AddOrMultiplyData();
-    //    var serverReaderTask = Task.Run(async () =>
-    //    {
-    //        await foreach (var resp in call.ResponseStream.ReadAllAsync())
-    //        {
-    //            Console.ForegroundColor = ConsoleColor.Green;
-    //            Console.WriteLine(resp.Value);
-    //            Console.ResetColor();
-    //        }
-    //    });
+    Console.WriteLine("Input numbers.\nEnter \"x\" to finish data stream");
+    try
+    {
+        var call = client.Calculate();
+        var serverReaderTask = Task.Run(async () =>
+        {
+            await foreach (var resp in call.ResponseStream.ReadAllAsync())
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(resp.Value);
+                Console.ResetColor();
+            }
+        });
 
-    //    while (true)
-    //    {
-    //        string userInput = Console.ReadLine()!;
-    //        if (userInput == "x") break;
+        while (true)
+        {
+            string userInput = Console.ReadLine()!;
+            if (userInput == "x") break;
 
-    //        int number = int.Parse(userInput);
+            double number = double.Parse(userInput);
 
-    //        await call.RequestStream.WriteAsync(new Data
-    //        {
-    //            Value = number
-    //        });
-    //    }
+            await call.RequestStream.WriteAsync(new Number
+            {
+                Value = number
+            });
+        }
 
-    //    await call.RequestStream.CompleteAsync();
-    //}
-    //catch (Exception e)
-    //{
-    //    Console.WriteLine(e);
-    //}
+        await call.RequestStream.CompleteAsync();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 }   
 
 async Task GetAccumulator()
@@ -112,8 +101,8 @@ async Task GetAccumulator()
     Console.ForegroundColor = ConsoleColor.Green;
     try
     {
-        var resp = await client.GetAllDataAsync(new Google.Protobuf.WellKnownTypes.Empty());      
-        Console.WriteLine($"Accumulator: {resp.Data}");    
+        var resp = await client.GetAccumulatorAsync(new Google.Protobuf.WellKnownTypes.Empty());
+        Console.WriteLine($"Accumulator: {resp.Value}");
     }
     catch (Exception e)
     {

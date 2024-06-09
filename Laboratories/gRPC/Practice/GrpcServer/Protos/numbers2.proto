@@ -1,0 +1,16 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "GrpcServer";
+
+package numbers2;
+
+service Numbers2 {
+	rpc AvgValue(Number) returns (google.protobuf.Empty);
+	rpc Calculate(stream Number) returns (stream Number);
+	rpc GetAccumulator(google.protobuf.Empty) returns (Number);
+}
+
+message Number {
+	double value = 1;
+}
