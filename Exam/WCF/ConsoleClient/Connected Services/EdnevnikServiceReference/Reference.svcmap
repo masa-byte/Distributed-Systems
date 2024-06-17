@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="55d4635d-089d-4747-9791-b650f15751a6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:57996/Ednevnik.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Ednevik.wsdl" MetadataType="Wsdl" ID="5b4123cf-be41-4970-888f-494b18392d05" SourceId="1" SourceUrl="http://localhost:57996/Ednevnik.svc?wsdl" />
+    <MetadataFile FileName="Ednevnik.xsd" MetadataType="Schema" ID="cbd01f0c-4bc4-4514-adb4-20e44a65f804" SourceId="1" SourceUrl="http://localhost:57996/Ednevnik.svc?xsd=xsd1" />
+    <MetadataFile FileName="Ednevnik1.xsd" MetadataType="Schema" ID="5f29c0e1-4957-4c26-a13e-bd38b665264c" SourceId="1" SourceUrl="http://localhost:57996/Ednevnik.svc?xsd=xsd0" />
+    <MetadataFile FileName="Ednevnik.disco" MetadataType="Disco" ID="edc8044c-5efa-444a-b9dc-766be57a3cf9" SourceId="1" SourceUrl="http://localhost:57996/Ednevnik.svc?disco" />
+    <MetadataFile FileName="Ednevnik2.xsd" MetadataType="Schema" ID="930fbed3-16aa-4e54-beaa-f87919304cdf" SourceId="1" SourceUrl="http://localhost:57996/Ednevnik.svc?xsd=xsd2" />
+    <MetadataFile FileName="Ednevnik3.xsd" MetadataType="Schema" ID="74c6848e-e7d1-4528-88a1-0d7293880ec7" SourceId="1" SourceUrl="http://localhost:57996/Ednevnik.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
